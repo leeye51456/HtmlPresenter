@@ -134,16 +134,20 @@ blockquote {
   text-align: right;
   min-width: 3em;
 }
-#fileForm {
-  padding: 1px;
-  background-color: #f0f0f0;
-}
 #versionText {
   font-family: D2Coding, 나눔고딕코딩, monospace;
   padding: 0 1em;
   border: none;
   background: none;
   color: #000000;
+}
+#bgAutoBtn, #bgCutBtn {
+  font-weight: bold;
+  font-size: 0.7em;
+}
+#fileForm {
+  padding: 1px;
+  background-color: #f0f0f0;
 }
 
 #bgList {
@@ -165,5 +169,5 @@ blockquote {
   content: "[I]";
   font-family: D2Coding, 나눔고딕코딩, monospace;
   margin-right: 0.25em;
-  border: 1px solid #a0ffff;
+  background-color: #a0ffff;
 }

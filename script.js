@@ -46,6 +46,7 @@ video,img,div {\n\
 }\n\
 #src1,#src2,#src3 {\n\
   opacity: 0;\n\
+  background-color: #000000;\n\
 }\n\
 #black {\n\
   background-color: #000000;\n\
@@ -227,9 +228,42 @@ function addFileList() {
   }
 }
 
+function moveSelection(direction) {
+  var checkedIndex = -1;
+  var temp;
+  for (i = fileListArray.length - 1; i >= 0; i--) {
+    if (document.getElementById('checkbox' + i).checked) {
+      if (checkedIndex == -1) {
+        checkedIndex = i;
+      } else {
+        alert('하나만 체크하세요.');
+        return;
+      }
+    }
+  }
+  if (checkedIndex == -1) {
+    alert('순서를 변경하려는 항목을 선택하세요.');
+    return;
+  }
+  if (checkedIndex == 0 && direction == -1) {
+    alert('이 항목은 위로 올릴 수 없습니다.');
+    return;
+  } else if (checkedIndex == fileListArray.length - 1 && direction == 1) {
+    alert('이 항목은 아래로 내릴 수 없습니다.');
+    return;
+  }
+  temp = fileListArray[checkedIndex];
+  fileListArray[checkedIndex] = fileListArray[checkedIndex + direction];
+  fileListArray[checkedIndex + direction] = temp;
+  displayFileListHtml();
+  checkedIndex += direction;
+  document.getElementById('checkbox' + checkedIndex).checked = true;
+}
+
 function removeSelectedFile() {
   if (fileListArray.length == 0) {
     alert('리스트가 비어 있습니다.');
+    document.getElementById('fileForm').focus();
   } else if (confirm('정말로 선택한 항목을 지우시겠습니까?')) {
     for (i = fileListArray.length - 1; i >= 0; i--) {
       if (document.getElementById('checkbox' + i).checked) {
@@ -266,4 +300,5 @@ function clearFileList() {
     updateBgNoMax();
     alert('리스트를 비웠습니다.');
   }
+  document.getElementById('fileForm').focus();
 }
