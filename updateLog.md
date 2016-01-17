@@ -1,4 +1,4 @@
-# HtmlPresenter Update Log
+# [HtmlPresenter](https://github.com/leeye51456/HtmlPresenter) Update Log
 
 ## 1.0.160118.2
 - 리스트의 순서를 조정하는 기능을 추가했습니다.
