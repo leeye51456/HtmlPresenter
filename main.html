@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>HtmlPresenter</title>
+  <link rel="stylesheet" href="styleMain.css" type="text/css">
+  <script src="script.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<h1 title="송출 창을 띄운 상태에서 새로고침을 한 경우, 버튼을 다시 눌러 주세요.">
+  HtmlPresenter
+  <input type="button" id="wndOnOffBtn" class="button" value="송출 창 띄우기/닫기" onclick="wndOnOff();">
+  <input type="text" id="versionText" value="1.0.160117.1" disabled>
+</h1>
+
+<hr>
+
+<div id="settings">
+  <h2 title="이상이 없다면 기본값 대로 두는 것을 권장합니다.">
+    세부 설정
+    <input type="button" class="button" value="적용" onclick="applySettings();">
+    <input type="button" class="button" value="취소" onclick="restoreSettings();">
+    <span id="isSettingChanged" title="설정 변경 후 적용하지 않았습니다."></span>
+  </h2>
+  <ul>
+    <li>
+      <label for="delayNum" title="전환 버튼 클릭 후 얼마 뒤에 실행할지를 정합니다.">딜레이(밀리초)</label>: 
+      <input type="number" id="delayNum" class="number" value="250" min="0" max="3000" step="50" onchange="settingChanged();">
+    </li>
+    <li>
+      <label for="takeDurationNum" title="화면 전환에 걸리는 시간을 정합니다.">전환 시간(초)</label>: 
+      <input type="number" id="takeDurationNum" class="number" value="2" min="0" max="10" step="0.5" onchange="settingChanged();">
+    </li>
+  </ul>
+</div>
+
+<hr>
+
+<div id="bgListContainer">
+  <h2 title="배경 0번은 검은 화면입니다.">
+    배경 스위처·리스트
+    <input type="number" id="bgNoNum" class="number" value="0" step="1" min="0" max="0" onchange="checkBgNo();"><!--
+    --><input type="button" class="buttonStep" value="+" onclick="countBgNo(1);"><!--
+    --><input type="button" class="buttonStep" value="-" onclick="countBgNo(-1);">
+    <input type="button" class="button" id="bgAutoBtn" value="AUTO" onclick="bgTrans(takeDuration);">
+    <input type="button" class="button" id="bgCutBtn" value="CUT" onclick="bgTrans(0);">
+  </h2>
+  <p title="이미지 파일과 H264로 인코딩된 mp4 파일만 불러올 수 있습니다.">
+    <input type="file" id="fileForm" accept="image/*,video/mp4" multiple onclick="document.getElementById('addFileListBtn').focus();">
+    →
+    <input type="button" class="button" id="addFileListBtn" value="리스트에 추가" onclick="addFileList();">
+  <p>
+    <input type="button" class="button" value="선택 항목 지우기" onclick="removeSelectedFile();">
+    <input type="button" class="button" value="선택 반전" onclick="invertSelection();">
+    <input type="button" class="button" value="선택 해제" onclick="uncheckAll();">
+    <input type="button" class="button" value="리스트 비우기" onclick="clearFileList();">
+  </p>
+  <ol id="bgList">
+    <li>파일을 선택하고 리스트를 갱신하세요.</li>
+  </ol>
+</div>
+
+</body>
+
+</html>

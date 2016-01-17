@@ -1,0 +1,169 @@
+* {
+  font-family: 나눔바른고딕OTF, 나눔바른고딕, 나눔고딕, sans-serif;
+}
+html {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  width: 700px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2em;
+  color: #101010;
+  border-bottom: 3px solid #e0e0e0;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+h2 {
+  font-size: 1.6em;
+  color: #202020;
+  border-bottom: 3px solid #e8e8e8;
+  margin-top: 1.11111111em;
+  margin-bottom: 0.55555556em;
+}
+h3 {
+  font-size: 1.4em;
+  color: #303030;
+  margin-top: 1.25em;
+  margin-bottom: 0.625em;
+}
+h4 {
+  font-size: 1.2em;
+  color: #404040;
+  margin-top: 1.42857143em;
+  margin-bottom: 0.71428571em;
+}
+h5 {
+  font-size: 1.1em;
+  color: #505050;
+  margin-top: 1.66666667em;
+  margin-bottom: 0.83333333em;
+}
+h6 {
+  font-size: 1.0em;
+  color: #606060;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+hr {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color: #4080ff;
+}
+a::after {
+  content: "→";
+  background-color: #e0f0ff;
+  border: 2px solid #c0e0ff;
+  color: #80a0ff;
+  margin-left: 0.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+}
+a:hover, a:active, a:hover::after, a:active::after {
+  background-color: #e0f0ff;
+  border-bottom: 2px solid #c0e0ff;
+}
+code {
+  font-family: D2Coding, monospace;
+  border: 2px solid #e8e8e8;
+  background-color: #f8f8f8;
+  padding: 0.1em 0.2em;
+}
+pre code {
+  border: none;
+  background-color: none;
+  padding: 0;
+}
+pre {
+  font-family: D2Coding, monospace;
+  border: 2px solid #e8e8e8;
+  background-color: #f8f8f8;
+  padding: 0.25em 1em;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+thead, tbody, tfoot {
+  border-color: #e0e0e0;
+  border-width: 2px;
+  border-style: solid none;
+}
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+thead th, tfoot td {
+  background-color: #f0f0f0;
+}
+th, td {
+  padding: 0.1em 0.5em;
+}
+
+blockquote {
+  margin: 1.25em 1em 1em 1em;
+  padding: 0.1px 1em 0.1px 2em;
+  border: 2px solid #e0e0e0;
+  border-left-width: 10px;
+  background-color: #f4f4f4;
+}
+
+/************************************************/
+
+.button {
+  padding: 3px 15px;
+}
+.buttonStep {
+  font-family: D2Coding, 나눔고딕코딩, monospace;
+  padding: 3px 7px;
+}
+.number {
+  font-family: D2Coding, 나눔고딕코딩, monospace;
+  padding: 3px 5px;
+  text-align: right;
+  min-width: 3em;
+}
+#fileForm {
+  padding: 1px;
+  background-color: #f0f0f0;
+}
+#versionText {
+  font-family: D2Coding, 나눔고딕코딩, monospace;
+  padding: 0 1em;
+  border: none;
+  background: none;
+  color: #000000;
+}
+
+#bgList {
+  list-style-position: inside;
+}
+#bgList li:nth-child(odd) {
+  background-color: #ffffff;
+}
+#bgList li:nth-child(even) {
+  background-color: #f8f8f8;
+}
+.listVideo::before {
+  content: "[V]";
+  font-family: D2Coding, 나눔고딕코딩, monospace;
+  margin-right: 0.25em;
+  background-color: #ffffa0;
+}
+.listImage::before {
+  content: "[I]";
+  font-family: D2Coding, 나눔고딕코딩, monospace;
+  margin-right: 0.25em;
+  border: 1px solid #a0ffff;
+}
