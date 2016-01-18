@@ -1,4 +1,4 @@
-# [HtmlPresenter](https://github.com/leeye51456/HtmlPresenter)
+# HtmlPresenter
 
 이것은 반복 배경 영상을 전환하기 위해 제작되었습니다. 제작자가 필요하다고 생각하는 기능부터 천천히 구현하고 있습니다.
 
