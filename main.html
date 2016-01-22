@@ -10,22 +10,19 @@
 
 <body>
 
-<h1 title="송출 창을 띄운 상태에서 새로고침을 한 경우, 버튼을 다시 눌러 주세요.">
+<h1>
   HtmlPresenter
-  <input type="button" id="wndOnOffBtn" class="button" value="송출 창 띄우기/닫기" onclick="wndOnOff();">
-  <input type="text" id="versionText" value="1.0.160118.2" disabled>
+  <input type="button" id="wndOnOffBtn" class="button" value="송출 창 띄우기/닫기" onclick="wndOnOff();" title="송출 창을 띄운 상태에서 새로고침을 한 경우, 창 띄우기 버튼을 다시 눌러 주세요.">
+  <input type="button" id="settingsBtn" class="button" value="세부 설정" onclick="settingsToggle();" title="이상이 없다면 기본값 그대로 두는 것을 권장합니다.">
+  <input type="text" id="versionText" value="1.1 alpha" disabled>
 </h1>
-
-<hr>
-
 <div id="settings">
-  <h2 title="이상이 없다면 기본값 대로 두는 것을 권장합니다.">
-    세부 설정
-    <input type="button" class="button" value="적용" onclick="applySettings();">
-    <input type="button" class="button" value="취소" onclick="restoreSettings();">
-    <span id="isSettingChanged" title="설정 변경 후 적용하지 않았습니다."></span>
-  </h2>
   <ul>
+    <li>
+      <input type="button" class="button" value="적용" onclick="applySettings();">
+      <input type="button" class="button" value="취소" onclick="restoreSettings();">
+      <span id="isSettingChanged" title="변경된 설정을 저장하지 않았습니다."></span>
+    </li>
     <li>
       <label for="delayNum" title="전환 버튼 클릭 후 얼마 뒤에 실행할지를 정합니다.">딜레이(밀리초)</label>: 
       <input type="number" id="delayNum" class="number" value="250" min="0" max="3000" step="50" onchange="settingChanged();">
@@ -43,29 +40,58 @@
 
 <div id="bgListContainer">
   <h2 title="배경 0번은 검은 화면입니다.">
-    배경 스위처·리스트
-    <input type="number" id="bgNoNum" class="number" value="0" step="1" min="0" max="0" onchange="checkBgNo();"><!--
-    --><input type="button" class="buttonStep" value="+" onclick="countBgNo(1);"><!--
-    --><input type="button" class="buttonStep" value="-" onclick="countBgNo(-1);">
+    배경 스위처
+    <span title="폐기예정" style="background-color: #ff0000;">
+      <input type="number" id="bgNoNum" class="number" value="0" step="1" min="0" max="0" onchange="checkBgNo();"><!--
+      --><input type="button" class="buttonStep" value="+" onclick="countBgNo(1);"><!--
+      --><input type="button" class="buttonStep" value="-" onclick="countBgNo(-1);"><!--
+    --></span>
     <input type="button" class="button" id="bgAutoBtn" value="AUTO" onclick="bgTrans(takeDuration);">
     <input type="button" class="button" id="bgCutBtn" value="CUT" onclick="bgTrans(0);">
+    <input type="button" class="button" id="editBgListBtn" value="리스트 편집" onclick="editBgList();">
   </h2>
-  <p title="이미지 파일과 H264로 인코딩된 mp4 파일만 불러올 수 있습니다.">
-    <input type="file" id="fileForm" accept="image/*,video/mp4" multiple onclick="document.getElementById('addFileListBtn').focus();">
-    →
-    <input type="button" class="button" id="addFileListBtn" value="리스트에 추가" onclick="addFileList();">
-  <p>
-    선택 항목:
-    <input type="button" class="buttonStep" value="▲" onclick="moveSelection(-1);"><!--
-    --><input type="button" class="buttonStep" value="▼" onclick="moveSelection(1);">
-    <input type="button" class="button" value="지우기" onclick="removeSelectedFile();">
-    <input type="button" class="button" value="반전" onclick="invertSelection();">
-    <input type="button" class="button" value="선택 해제" onclick="uncheckAll();">
-    <input type="button" class="button" value="리스트 비우기" onclick="clearFileList();">
-  </p>
-  <ol id="bgList">
-    <li>파일을 선택하고 리스트를 갱신하세요.</li>
-  </ol>
+  <div id="editBgListTools">
+    <ul>
+      <li title="이미지 파일과 H264로 인코딩된 mp4 파일만 불러올 수 있습니다.">
+        <input type="file" id="fileForm" accept="image/*,video/mp4" multiple onclick="document.getElementById('addFileListBtn').focus();">
+        →
+        <input type="button" class="button" id="addFileListBtn" value="리스트에 추가" onclick="addFileList();">
+      </li>
+      <li>
+        선택 항목:
+        <input type="button" class="buttonStep" value="▲" onclick="moveSelection(-1);"><!--
+        --><input type="button" class="buttonStep" value="▼" onclick="moveSelection(1);">
+        <input type="button" class="button" value="지우기" onclick="removeSelectedFile();">
+        <input type="button" class="button" value="반전" onclick="invertSelection();">
+        <input type="button" class="button" value="선택 해제" onclick="uncheckAll();">
+        <input type="button" class="button" value="리스트 비우기" onclick="clearFileList();">
+      </li>
+    </ul>
+  </div>
+  <div id="pvwPgm">
+    <div id="pvw"><div id="pvwObj"></div>PVW</div>
+    <div id="pgm"><div id="pgmObj"></div>PGM</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>선택</th>
+        <th>PVW</th>
+        <th>PGM</th>
+        <th>형식</th>
+        <th class="tdLeft">파일 이름</th>
+      </tr>
+    </thead>
+    <tbody id="bgList">
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="tdLeft">파일을 선택하고 리스트를 갱신하세요.</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 </body>

@@ -92,6 +92,7 @@ pre {
 table {
   border-collapse: collapse;
   margin: 1em 0;
+  width: 100%;
 }
 thead, tbody, tfoot {
   border-color: #e0e0e0;
@@ -103,6 +104,10 @@ tr:nth-child(odd) {
 }
 tr:nth-child(even) {
   background-color: #f8f8f8;
+}
+td {
+  text-align: center;
+  width: 2em;
 }
 thead th, tfoot td {
   background-color: #f0f0f0;
@@ -134,6 +139,9 @@ blockquote {
   text-align: right;
   min-width: 3em;
 }
+#settings, #editBgListTools {
+  display: none;
+}
 #versionText {
   font-family: D2Coding, 나눔고딕코딩, monospace;
   padding: 0 1em;
@@ -150,14 +158,21 @@ blockquote {
   background-color: #f0f0f0;
 }
 
-#bgList {
-  list-style-position: inside;
+#pvw, #pgm {
+  width: 160px;
+  float: left;
+  text-align: center;
+  margin: 0 0.5em 0.5em 0.5em;
 }
-#bgList li:nth-child(odd) {
-  background-color: #ffffff;
+#pvwObj, #pgmObj {
+  width: 160px;
+  height: 100px;
+  border: 1px solid #000000;
 }
-#bgList li:nth-child(even) {
-  background-color: #f8f8f8;
+
+.tdLeft {
+  text-align: left;
+  width: auto;
 }
 .listVideo::before {
   content: "[V]";

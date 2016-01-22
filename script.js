@@ -6,6 +6,15 @@ var timer2;
 var delay = 250;
 var takeDuration = 2;
 
+function settingsToggle() {
+  var settingsDiv = document.getElementById('settings')
+  if (settingsDiv.style.display == 'block') {
+    settingsDiv.style.display = 'none';
+  } else {
+    settingsDiv.style.display = 'block';
+  }
+}
+
 function applySettings() {
   delay = Number(document.getElementById('delayNum').value);
   takeDuration = Number(document.getElementById('takeDurationNum').value);
@@ -183,6 +192,15 @@ function bgTrans(dur) {
       }
     }
   document.getElementById('bgAutoBtn').focus();
+  }
+}
+
+function editBgList() {
+  var bgListToolsDiv = document.getElementById('editBgListTools')
+  if (bgListToolsDiv.style.display == 'block') {
+    bgListToolsDiv.style.display = 'none';
+  } else {
+    bgListToolsDiv.style.display = 'block';
   }
 }
 
