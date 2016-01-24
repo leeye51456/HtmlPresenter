@@ -195,32 +195,23 @@ function bgTrans(dur) {
   }
 }
 
-function editBgList() {
-  var bgListToolsDiv = document.getElementById('editBgListTools')
-  if (bgListToolsDiv.style.display == 'block') {
-    bgListToolsDiv.style.display = 'none';
-  } else {
-    bgListToolsDiv.style.display = 'block';
-  }
-}
-
 function displayFileListHtml() {
-  var text = '';
+  var text = '<tr><td>&nbsp;</td><td><input type="radio" id="pvwRadio0" name="pvwRadio"></td><td><input type="radio" id="pgmRadio0" name="pgmRadio" class="pgmRadio" disabled></td><td>&nbsp;</td><td class="tdLeft"><label for="pvwRadio0">(검은 화면)</label></td></tr>';
   if (fileListArray.length > 0) {
     for (i = 0; i < fileListArray.length; i++) {
+      text += '<tr><td><input type="checkbox" id="checkbox' + (i + 1) + '"></td><td><input type="radio" id="pvwRadio' + (i + 1) + '"></td><td><input type="radio" id="pgmRadio' + (i + 1) + '" class="pgmRadio" disabled></td><td>';
       if (fileListArray[i].slice(-3) == 'mp4') {
-        text += '<li class="listVideo">';
+        text += 'V';
       } else {
-        text += '<li class="listImage">';
+        text += 'I';
       }
-      text += '<input type="checkbox" id="checkbox' + i + '"><label for="checkbox' + i + '">' + fileListArray[i] + '</label></li>';
+      text += '</td><td class="tdLeft"><label for="pvwRadio' + (i + 1) + '">' + fileListArray[i] + '</label></td></tr>';
     }
-  } else {
-    text = '<li>파일을 선택하고 리스트를 갱신하세요.</li>';
   }
   document.getElementById('bgList').innerHTML = text;
 }
 
+// 폐기예정
 function updateBgNoMax() {
   var bgNo = document.getElementById('bgNoNum')
   bgNo.max = fileListArray.length;
@@ -249,10 +240,10 @@ function addFileList() {
 function moveSelection(direction) {
   var checkedIndex = -1;
   var temp;
-  for (i = fileListArray.length - 1; i >= 0; i--) {
+  for (i = fileListArray.length; i > 0; i--) {
     if (document.getElementById('checkbox' + i).checked) {
       if (checkedIndex == -1) {
-        checkedIndex = i;
+        checkedIndex = i - 1;
       } else {
         alert('하나만 체크하세요.');
         return;
@@ -275,7 +266,7 @@ function moveSelection(direction) {
   fileListArray[checkedIndex + direction] = temp;
   displayFileListHtml();
   checkedIndex += direction;
-  document.getElementById('checkbox' + checkedIndex).checked = true;
+  document.getElementById('checkbox' + (checkedIndex + 1)).checked = true;
 }
 
 function removeSelectedFile() {
@@ -283,9 +274,9 @@ function removeSelectedFile() {
     alert('리스트가 비어 있습니다.');
     document.getElementById('fileForm').focus();
   } else if (confirm('정말로 선택한 항목을 지우시겠습니까?')) {
-    for (i = fileListArray.length - 1; i >= 0; i--) {
+    for (i = fileListArray.length; i > 0; i--) {
       if (document.getElementById('checkbox' + i).checked) {
-        fileListArray.splice(i, 1);
+        fileListArray.splice(i - 1, 1);
       }
     }
     displayFileListHtml();
@@ -294,7 +285,7 @@ function removeSelectedFile() {
 }
 
 function invertSelection() {
-  for (i = fileListArray.length - 1; i >= 0; i--) {
+  for (i = fileListArray.length; i > 0; i--) {
     if (document.getElementById('checkbox' + i).checked) {
       document.getElementById('checkbox' + i).checked = false;
     } else {
@@ -304,7 +295,7 @@ function invertSelection() {
 }
 
 function uncheckAll() {
-  for (i = fileListArray.length - 1; i >= 0; i--) {
+  for (i = fileListArray.length; i > 0; i--) {
     document.getElementById('checkbox' + i).checked = false;
   }
 }
@@ -314,7 +305,7 @@ function clearFileList() {
     alert('리스트가 비어 있습니다.');
   } else if (confirm('정말로 리스트를 비우시겠습니까?')) {
     fileListArray = [];
-    document.getElementById('bgList').innerHTML = '<li>파일을 선택하고 리스트를 갱신하세요.</li>';
+    displayFileListHtml();
     updateBgNoMax();
     alert('리스트를 비웠습니다.');
   }

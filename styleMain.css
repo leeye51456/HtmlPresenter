@@ -139,7 +139,7 @@ blockquote {
   text-align: right;
   min-width: 3em;
 }
-#settings, #editBgListTools {
+#settings {
   display: none;
 }
 #versionText {
@@ -149,40 +149,43 @@ blockquote {
   background: none;
   color: #000000;
 }
-#bgAutoBtn, #bgCutBtn {
-  font-weight: bold;
-  font-size: 0.7em;
+
+#pvwPgm {
+  float: left;
 }
+#pvw, #pgm {
+  float: left;
+  text-align: center;
+  margin: 0 10px 10px 0;
+}
+#pvwObj, #pgmObj {
+  width: 160px;
+  height: 90px;
+  border: 1px solid #000000;
+}
+
+#transBtnContainer {
+  float: right;
+}
+#bgAutoBtn, #bgCutBtn {
+  float: right;
+  margin: 0 0 10px 5px;
+  width: 120px;
+  height: 90px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 #fileForm {
   padding: 1px;
   background-color: #f0f0f0;
 }
 
-#pvw, #pgm {
-  width: 160px;
-  float: left;
-  text-align: center;
-  margin: 0 0.5em 0.5em 0.5em;
-}
-#pvwObj, #pgmObj {
-  width: 160px;
-  height: 100px;
-  border: 1px solid #000000;
+#editBgListTools {
+  clear: both;
 }
 
 .tdLeft {
   text-align: left;
   width: auto;
-}
-.listVideo::before {
-  content: "[V]";
-  font-family: D2Coding, 나눔고딕코딩, monospace;
-  margin-right: 0.25em;
-  background-color: #ffffa0;
-}
-.listImage::before {
-  content: "[I]";
-  font-family: D2Coding, 나눔고딕코딩, monospace;
-  margin-right: 0.25em;
-  background-color: #a0ffff;
 }
