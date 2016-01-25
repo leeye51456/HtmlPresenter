@@ -1,37 +1,17 @@
 var wnd;
 var fileListArray = [];
 var bgPgm = 0;
-var timer1;
-var timer2;
 var delay = 250;
 var takeDuration = 2;
 
-function settingsToggle() {
-  var settingsDiv = document.getElementById('settings')
-  if (settingsDiv.style.display == 'block') {
-    settingsDiv.style.display = 'none';
-  } else {
-    settingsDiv.style.display = 'block';
-  }
-}
-
-function applySettings() {
-  delay = Number(document.getElementById('delayNum').value);
-  takeDuration = Number(document.getElementById('takeDurationNum').value);
-  document.getElementById('isSettingChanged').innerHTML = '';
-}
-
-function restoreSettings() {
-  document.getElementById('delayNum').value = delay;
-  document.getElementById('takeDurationNum').value = takeDuration;
-  document.getElementById('isSettingChanged').innerHTML = '';
-}
-
-function settingChanged() {
-  document.getElementById('isSettingChanged').innerHTML = '*';
-}
 
 function wndInit() {
+  bgPgm = 0;
+  for (i = fileListArray.length; i >= 0; i--) {
+    document.getElementById('pvwRadio' + i).checked = false;
+    document.getElementById('pgmRadio' + i).checked = false;
+  }
+  document.getElementById('pgmRadio0').checked = true;
   wnd = window.open('', 'wnd', 'scrollbar=no');
   wnd.document.write('\
 <!doctype html>\n\
@@ -74,25 +54,48 @@ video,img,div {\n\
 function wndOnOff() {
   if (!wnd || wnd.closed) {
     wndInit();
-  } else if (confirm("정말로 송출 창을 닫으시겠습니까?")) {
+  } else if (confirm('정말로 송출 창을 닫으시겠습니까?')) {
     wnd.close();
+    for (i = fileListArray.length; i >= 0; i--) {
+      document.getElementById('pvwRadio' + i).disabled = undefined;
+      document.getElementById('pvwRadio' + i).checked = false;
+      document.getElementById('pgmRadio' + i).checked = false;
+    }
   }
 }
 
-function checkBgNo() {
-  var bgNo = document.getElementById('bgNoNum');
-  if (Number(bgNo.value) > Number(bgNo.max)) {
-    bgNo.value = bgNo.max;
-  } else if (Number(bgNo.value) < Number(bgNo.min)) {
-    bgNo.value = bgNo.min;
+function settingsToggle() {
+  var settingsDiv = document.getElementById('settings')
+  if (settingsDiv.style.display == 'block') {
+    settingsDiv.style.display = 'none';
+  } else {
+    settingsDiv.style.display = 'block';
   }
-  document.getElementById('bgAutoBtn').focus();
+}
+function applySettings() {
+  delay = Number(document.getElementById('delayNum').value);
+  takeDuration = Number(document.getElementById('takeDurationNum').value);
+  document.getElementById('isSettingChanged').innerHTML = '';
+  document.getElementById('settings').style.display = 'none';
+}
+function restoreSettings() {
+  document.getElementById('delayNum').value = delay;
+  document.getElementById('takeDurationNum').value = takeDuration;
+  document.getElementById('isSettingChanged').innerHTML = '';
+  document.getElementById('settings').style.display = 'none';
+}
+function settingChanged() {
+  document.getElementById('isSettingChanged').innerHTML = '*';
 }
 
-function countBgNo(inc) {
-  var bgNo = document.getElementById('bgNoNum');
-  bgNo.value = Number(bgNo.value) + inc;
-  checkBgNo();
+function getBgNo() {
+  for (i = fileListArray.length; i >= 0; i--) {
+    if (document.getElementById('pvwRadio' + i).checked) {
+      return i;
+    }
+  }
+  alert('아무 것도 선택하지 않았습니다.');
+  return -1;
 }
 
 function afterSrc1Load() {
@@ -118,13 +121,24 @@ function bgTrans(dur) {
     alert('먼저 송출 창을 띄우세요.');
     document.getElementById('wndOnOffBtn').focus();
   } else {
+    var bgNo = getBgNo() - 1;
+    document.getElementById('pgmRadio' + i).checked = true;
     setTimeout(function() {
+      var bgNoTemp = bgNo;
       document.getElementById('bgAutoBtn').disabled = undefined;
       document.getElementById('bgCutBtn').disabled = undefined;
+      for (i = fileListArray.length; i >= 0; i--) {
+        document.getElementById('pvwRadio' + i).disabled = undefined;
+        document.getElementById('pvwRadio' + i).checked = false;
+        document.getElementById('pgmRadio' + i).checked = false;
+      }
+      document.getElementById('pgmRadio' + (bgNoTemp + 1)).checked = true;
     }, delay + dur * 1000);
     document.getElementById('bgAutoBtn').disabled = 'disabled';
     document.getElementById('bgCutBtn').disabled = 'disabled';
-    var bgNo = document.getElementById('bgNoNum').value - 1;
+    for (i = fileListArray.length; i >= 0; i--) {
+      document.getElementById('pvwRadio' + i).disabled = 'disabled';
+    }
     var src1 = wnd.document.getElementById('src1');
     var src2 = wnd.document.getElementById('src2');
     var src3 = wnd.document.getElementById('src3');
@@ -191,33 +205,32 @@ function bgTrans(dur) {
         alert('error!');
       }
     }
-  document.getElementById('bgAutoBtn').focus();
   }
 }
 
 function displayFileListHtml() {
-  var text = '<tr><td>&nbsp;</td><td><input type="radio" id="pvwRadio0" name="pvwRadio"></td><td><input type="radio" id="pgmRadio0" name="pgmRadio" class="pgmRadio" disabled></td><td>&nbsp;</td><td class="tdLeft"><label for="pvwRadio0">(검은 화면)</label></td></tr>';
+  var text = '<tr>\
+<td>&nbsp;</td>\
+<td><input type="radio" id="pvwRadio0" name="pvwRadio"></td>\
+<td><input type="radio" id="pgmRadio0" class="pgmRadio" disabled></td>\
+<td>&nbsp;</td>\
+<td class="tdLeft"><label for="pvwRadio0">(검은 화면)</label></td>\
+</tr>';
   if (fileListArray.length > 0) {
     for (i = 0; i < fileListArray.length; i++) {
-      text += '<tr><td><input type="checkbox" id="checkbox' + (i + 1) + '"></td><td><input type="radio" id="pvwRadio' + (i + 1) + '"></td><td><input type="radio" id="pgmRadio' + (i + 1) + '" class="pgmRadio" disabled></td><td>';
+      text += '<tr>\
+<td><input type="checkbox" id="checkbox' + (i + 1) + '"></td>\
+<td><input type="radio" id="pvwRadio' + (i + 1) + '" name="pvwRadio"></td>\
+<td><input type="radio" id="pgmRadio' + (i + 1) + '" class="pgmRadio" disabled></td>';
       if (fileListArray[i].slice(-3) == 'mp4') {
-        text += 'V';
+        text += '<td>V</td>';
       } else {
-        text += 'I';
+        text += '<td>I</td>';
       }
-      text += '</td><td class="tdLeft"><label for="pvwRadio' + (i + 1) + '">' + fileListArray[i] + '</label></td></tr>';
+      text += '<td class="tdLeft"><label for="pvwRadio' + (i + 1) + '">' + fileListArray[i] + '</label></td></tr>';
     }
   }
   document.getElementById('bgList').innerHTML = text;
-}
-
-// 폐기예정
-function updateBgNoMax() {
-  var bgNo = document.getElementById('bgNoNum')
-  bgNo.max = fileListArray.length;
-  if (bgNo.value > bgNo.max) {
-    bgNo.value = bgNo.max;
-  }
 }
 
 function addFileList() {
@@ -227,10 +240,8 @@ function addFileList() {
       fileListArray.push(fileForm.files[i].name);
     }
     displayFileListHtml();
-    updateBgNoMax();
     alert('' + fileForm.files.length + '개의 파일이 리스트에 추가되었습니다.');
     fileForm.value = '';
-    document.getElementById('bgNoNum').focus();
   } else {
     alert('먼저 리스트에 추가할 파일을 선택하세요.');
     document.getElementById('fileForm').focus();
@@ -280,7 +291,6 @@ function removeSelectedFile() {
       }
     }
     displayFileListHtml();
-    updateBgNoMax();
   }
 }
 
@@ -306,7 +316,6 @@ function clearFileList() {
   } else if (confirm('정말로 리스트를 비우시겠습니까?')) {
     fileListArray = [];
     displayFileListHtml();
-    updateBgNoMax();
     alert('리스트를 비웠습니다.');
   }
   document.getElementById('fileForm').focus();

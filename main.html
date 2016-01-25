@@ -39,18 +39,10 @@
 <hr>
 
 <div id="bgListContainer">
-  <h2 title="배경 0번은 검은 화면입니다.">
+  <h2>
     배경 스위처
-    <span title="폐기예정" style="background-color: #ff0000;">
-      <input type="number" id="bgNoNum" class="number" value="0" step="1" min="0" max="0" onchange="checkBgNo();"><!--
-      --><input type="button" class="buttonStep" value="+" onclick="countBgNo(1);"><!--
-      --><input type="button" class="buttonStep" value="-" onclick="countBgNo(-1);"><!--
-    --></span>
   </h2>
-  <div id="pvwPgm">
-    <div id="pvw"><div id="pvwObj"></div>PVW</div>
-    <div id="pgm"><div id="pgmObj"></div>PGM</div>
-  </div>
+  <div id="pvw"><div id="pvwObj"></div>Preview</div>
   <div id="transBtnContainer">
     <input type="button" class="button" id="bgCutBtn" value="CUT" onclick="bgTrans(0);">
     <input type="button" class="button" id="bgAutoBtn" value="AUTO" onclick="bgTrans(takeDuration);">
@@ -63,7 +55,7 @@
         <input type="button" class="button" id="addFileListBtn" value="리스트에 추가" onclick="addFileList();">
       </li>
       <li>
-        선택 항목 동작: 
+        체크 항목 동작: 
         <input type="button" class="buttonStep" value="▲" onclick="moveSelection(-1);" title="선택한 한 항목을 한 칸 위로 이동합니다."><!--
         --><input type="button" class="buttonStep" value="▼" onclick="moveSelection(1);" title="선택한 한 항목을 한 칸 아래로 이동합니다.">
         <input type="button" class="button" value="지우기" onclick="removeSelectedFile();" title="선택한 모든 항목을 리스트에서 지웁니다.">
@@ -76,7 +68,7 @@
   <table>
     <thead>
       <tr>
-        <th>선택</th>
+        <th>체크</th>
         <th>PVW</th>
         <th>PGM</th>
         <th>형식</th>
@@ -87,7 +79,7 @@
       <tr>
         <td>&nbsp;</td>
         <td><input type="radio" id="pvwRadio0" name="pvwRadio"></td>
-        <td><input type="radio" id="pgmRadio0" name="pgmRadio" class="pgmRadio" disabled></td>
+        <td><input type="radio" id="pgmRadio0" class="pgmRadio" disabled></td>
         <td>&nbsp;</td>
         <td class="tdLeft"><label for="pvwRadio0">(검은 화면)</label></td>
       </tr>

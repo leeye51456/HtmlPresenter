@@ -150,15 +150,12 @@ blockquote {
   color: #000000;
 }
 
-#pvwPgm {
-  float: left;
-}
-#pvw, #pgm {
+#pvw {
   float: left;
   text-align: center;
   margin: 0 10px 10px 0;
 }
-#pvwObj, #pgmObj {
+#pvwObj {
   width: 160px;
   height: 90px;
   border: 1px solid #000000;
