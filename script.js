@@ -161,24 +161,24 @@ function bgTrans(dur) {
       if (bgPgm == 0) {
         bgPgm = 3;
         src3.style.transition = 'opacity 0s';
-        src3.innerHTML = '<video src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+        src3.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
         src1.innerHTML = '';
         src2.innerHTML = '';
         afterSrc3Load();
         black.style.opacity = 0;
       } else if (bgPgm == 3) {
         bgPgm = 2;
-        src2.innerHTML = '<video src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+        src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
         src1.innerHTML = '';
         afterSrc2Load();
       } else if (bgPgm == 2) {
         bgPgm = 1;
-        src1.innerHTML = '<video src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+        src1.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
         src3.innerHTML = '';
         afterSrc1Load();
       } else if (bgPgm == 1) {
         bgPgm = 3;
-        src3.innerHTML = '<video src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+        src3.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
         src2.innerHTML = '';
         afterSrc3Load();
       } else {
@@ -188,24 +188,24 @@ function bgTrans(dur) {
       if (bgPgm == 0) {
         bgPgm = 3;
         src3.style.transition = 'opacity 0s';
-        src3.innerHTML = '<img src="src\\' + fileListArray[bgNo] + '"></img>';
+        src3.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
         src1.innerHTML = '';
         src2.innerHTML = '';
         afterSrc3Load();
         black.style.opacity = 0;
       } else if (bgPgm == 3) {
         bgPgm = 2;
-        src2.innerHTML = '<img src="src\\' + fileListArray[bgNo] + '"></img>';
+        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
         src1.innerHTML = '';
         afterSrc2Load();
       } else if (bgPgm == 2) {
         bgPgm = 1;
-        src1.innerHTML = '<img src="src\\' + fileListArray[bgNo] + '"></img>';
+        src1.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
         src3.innerHTML = '';
         afterSrc1Load();
       } else if (bgPgm == 1) {
         bgPgm = 3;
-        src3.innerHTML = '<img src="src\\' + fileListArray[bgNo] + '"></img>';
+        src3.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
         src2.innerHTML = '';
         afterSrc3Load();
       } else {
@@ -215,18 +215,16 @@ function bgTrans(dur) {
   }
 }
 
-/////////////////////////////////////////////////////
 function bgPvwChanged(pvwBgNo) {
   var bgNo = getBgNo() - 1;
   var htmlText = '';
-  if (bgNo == -1) { //검정
-  } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
-    htmlText += '<video id="pvwObjInner" src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-  } else {
-    htmlText += '<img id="pvwObjInner" src="src\\' + fileListArray[bgNo] + '"></img>';
+  if (fileListArray[bgNo].slice(-3) == 'mp4') {
+    htmlText += '<video id="pvwObjInner" src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+  } else if (bgNo != -1) {
+    htmlText += '<img id="pvwObjInner" src="src/' + fileListArray[bgNo] + '"></img>';
   }
-    
   document.getElementById('pvwObj').innerHTML = htmlText;
+  document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
   document.getElementById('bgAutoBtn').focus();
 }
 

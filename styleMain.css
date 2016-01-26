@@ -168,7 +168,6 @@ blockquote {
 }
 #pvwObjInner {
   height: 90px;
-  width: auto;
   transition: width 0.5s;
 }
 
