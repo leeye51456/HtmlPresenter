@@ -154,11 +154,22 @@ blockquote {
   float: left;
   text-align: center;
   margin: 0 10px 10px 0;
+  padding: 0;
 }
 #pvwObj {
+  margin: 0;
+  padding: 0;
   width: 160px;
   height: 90px;
   border: 1px solid #000000;
+  background-color: #000000;
+  transition: width 0.5s;
+  overflow: hidden;
+}
+#pvwObjInner {
+  height: 90px;
+  width: auto;
+  transition: width 0.5s;
 }
 
 #transBtnContainer {

@@ -49,6 +49,12 @@ video,img,div {\n\
 <div id=\"black\"></div>\n\
 </body>\n\
 </html>');
+  wnd.onresize = function() {
+    document.getElementById('pvwObj').style.width = '' + (wnd.innerWidth / wnd.innerHeight * 90) + 'px';
+    if (document.getElementById('pvwObjInner')) {
+      document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
+    }
+  };
 }
 
 function wndOnOff() {
@@ -65,7 +71,7 @@ function wndOnOff() {
 }
 
 function settingsToggle() {
-  var settingsDiv = document.getElementById('settings')
+  var settingsDiv = document.getElementById('settings');
   if (settingsDiv.style.display == 'block') {
     settingsDiv.style.display = 'none';
   } else {
@@ -133,6 +139,7 @@ function bgTrans(dur) {
         document.getElementById('pgmRadio' + i).checked = false;
       }
       document.getElementById('pgmRadio' + (bgNoTemp + 1)).checked = true;
+      document.getElementById('pvwObj').innerHTML = '';
     }, delay + dur * 1000);
     document.getElementById('bgAutoBtn').disabled = 'disabled';
     document.getElementById('bgCutBtn').disabled = 'disabled';
@@ -208,10 +215,25 @@ function bgTrans(dur) {
   }
 }
 
+/////////////////////////////////////////////////////
+function bgPvwChanged(pvwBgNo) {
+  var bgNo = getBgNo() - 1;
+  var htmlText = '';
+  if (bgNo == -1) { //검정
+  } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
+    htmlText += '<video id="pvwObjInner" src="src\\' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+  } else {
+    htmlText += '<img id="pvwObjInner" src="src\\' + fileListArray[bgNo] + '"></img>';
+  }
+    
+  document.getElementById('pvwObj').innerHTML = htmlText;
+  document.getElementById('bgAutoBtn').focus();
+}
+
 function displayFileListHtml() {
   var text = '<tr>\
 <td>&nbsp;</td>\
-<td><input type="radio" id="pvwRadio0" name="pvwRadio"></td>\
+<td><input type="radio" id="pvwRadio0" name="pvwRadio" onclick="bgPvwChanged(0);"></td>\
 <td><input type="radio" id="pgmRadio0" class="pgmRadio" disabled></td>\
 <td>&nbsp;</td>\
 <td class="tdLeft"><label for="pvwRadio0">(검은 화면)</label></td>\
@@ -220,7 +242,7 @@ function displayFileListHtml() {
     for (i = 0; i < fileListArray.length; i++) {
       text += '<tr>\
 <td><input type="checkbox" id="checkbox' + (i + 1) + '"></td>\
-<td><input type="radio" id="pvwRadio' + (i + 1) + '" name="pvwRadio"></td>\
+<td><input type="radio" id="pvwRadio' + (i + 1) + '" name="pvwRadio" onclick="bgPvwChanged(' + (i + 1) + ');"></td>\
 <td><input type="radio" id="pgmRadio' + (i + 1) + '" class="pgmRadio" disabled></td>';
       if (fileListArray[i].slice(-3) == 'mp4') {
         text += '<td>V</td>';
