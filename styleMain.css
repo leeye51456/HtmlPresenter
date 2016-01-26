@@ -135,12 +135,16 @@ blockquote {
 }
 .number {
   font-family: D2Coding, 나눔고딕코딩, monospace;
-  padding: 3px 5px;
+  padding: 3px 3px;
   text-align: right;
   min-width: 3em;
 }
 #settings {
   display: none;
+}
+#settings ul {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 #versionText {
   font-family: D2Coding, 나눔고딕코딩, monospace;

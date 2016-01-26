@@ -11,9 +11,9 @@ function wndInit() {
     document.getElementById('pvwRadio' + i).checked = false;
     document.getElementById('pgmRadio' + i).checked = false;
   }
-  document.getElementById('pgmRadio0').checked = true;
   wnd = window.open('', 'wnd', 'scrollbar=no');
-  wnd.document.write('\
+  try {
+    wnd.document.write('\
 <!doctype html>\n\
 <html>\n\
 <head>\n\
@@ -49,18 +49,24 @@ video,img,div {\n\
 <div id=\"black\"></div>\n\
 </body>\n\
 </html>');
-  wnd.onresize = function() {
-    document.getElementById('pvwObj').style.width = '' + (wnd.innerWidth / wnd.innerHeight * 90) + 'px';
-    if (document.getElementById('pvwObjInner')) {
-      document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
+    wnd.onresize = function() {
+      document.getElementById('pvwObj').style.width = '' + (wnd.innerWidth / wnd.innerHeight * 90) + 'px';
+      if (document.getElementById('pvwObjInner')) {
+        document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
+      }
+    };
+    document.getElementById('pgmRadio0').checked = true;
+  } catch (err) {
+    if (confirm('스위처와 송출 창이 서로 통신할 수 없는 상태입니다.\n송출 창을 닫을까요?')) {
+      wnd.close();
     }
-  };
+  }
 }
 
 function wndOnOff() {
   if (!wnd || wnd.closed) {
     wndInit();
-  } else if (confirm('정말로 송출 창을 닫으시겠습니까?')) {
+  } else if (confirm('송출 창을 닫을까요?')) {
     wnd.close();
     for (i = fileListArray.length; i >= 0; i--) {
       document.getElementById('pvwRadio' + i).disabled = undefined;
@@ -111,14 +117,8 @@ function afterSrc1Load() {
 }
 function afterSrc2Load() {
   setTimeout(function() {
-    wnd.document.getElementById('src3').style.opacity = 0;
-  }, delay);
-}
-function afterSrc3Load() {
-  setTimeout(function() {
     wnd.document.getElementById('src1').style.opacity = 1;
     wnd.document.getElementById('src2').style.opacity = 1;
-    wnd.document.getElementById('src3').style.opacity = 1;
   }, delay);
 }
 
@@ -159,57 +159,39 @@ function bgTrans(dur) {
       black.style.opacity = 1;
     } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
       if (bgPgm == 0) {
-        bgPgm = 3;
-        src3.style.transition = 'opacity 0s';
-        src3.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        src1.innerHTML = '';
-        src2.innerHTML = '';
-        afterSrc3Load();
-        black.style.opacity = 0;
-      } else if (bgPgm == 3) {
         bgPgm = 2;
+        src2.style.transition = 'opacity 0s';
+        src1.style.transition = 'opacity 0s';
         src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
         src1.innerHTML = '';
         afterSrc2Load();
+        black.style.opacity = 0;
       } else if (bgPgm == 2) {
         bgPgm = 1;
         src1.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        src3.innerHTML = '';
         afterSrc1Load();
       } else if (bgPgm == 1) {
-        bgPgm = 3;
-        src3.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        src2.innerHTML = '';
-        afterSrc3Load();
-      } else {
-        alert('error!');
+        bgPgm = 2;
+        src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+        afterSrc2Load();
       }
     } else {
       if (bgPgm == 0) {
-        bgPgm = 3;
-        src3.style.transition = 'opacity 0s';
-        src3.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
-        src1.innerHTML = '';
-        src2.innerHTML = '';
-        afterSrc3Load();
-        black.style.opacity = 0;
-      } else if (bgPgm == 3) {
         bgPgm = 2;
-        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
+        src2.style.transition = 'opacity 0s';
+        src1.style.transition = 'opacity 0s';
+        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
         src1.innerHTML = '';
         afterSrc2Load();
+        black.style.opacity = 0;
       } else if (bgPgm == 2) {
         bgPgm = 1;
-        src1.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
-        src3.innerHTML = '';
+        src1.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
         afterSrc1Load();
       } else if (bgPgm == 1) {
-        bgPgm = 3;
-        src3.innerHTML = '<img src="src/' + fileListArray[bgNo] + '"></img>';
-        src2.innerHTML = '';
-        afterSrc3Load();
-      } else {
-        alert('error!');
+        bgPgm = 2;
+        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
+        afterSrc2Load();
       }
     }
   }
@@ -221,7 +203,7 @@ function bgPvwChanged(pvwBgNo) {
   if (fileListArray[bgNo].slice(-3) == 'mp4') {
     htmlText += '<video id="pvwObjInner" src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
   } else if (bgNo != -1) {
-    htmlText += '<img id="pvwObjInner" src="src/' + fileListArray[bgNo] + '"></img>';
+    htmlText += '<img id="pvwObjInner" src="src/' + fileListArray[bgNo] + '">';
   }
   document.getElementById('pvwObj').innerHTML = htmlText;
   document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
