@@ -5,6 +5,13 @@ var delay = 250;
 var takeDuration = 2;
 
 
+function cannotControlWnd() {
+  if (confirm('스위처와 송출 창이 서로 통신할 수 없는 상태입니다.\n송출 창을 닫을까요?')) {
+    wnd = window.open('', 'wnd', 'scrollbar=no');
+    wnd.close();
+  }
+}
+
 function wndInit() {
   bgPgm = 0;
   for (i = fileListArray.length; i >= 0; i--) {
@@ -57,8 +64,10 @@ video,img,div {\n\
     };
     document.getElementById('pgmRadio0').checked = true;
   } catch (err) {
-    if (confirm('스위처와 송출 창이 서로 통신할 수 없는 상태입니다.\n송출 창을 닫을까요?')) {
+    if (confirm('스위처와 송출 창이 서로 통신할 수 없는 상태입니다.\n송출 창을 다시 띄울까요?')) {
+      wnd = window.open('', 'wnd', 'scrollbar=no');
       wnd.close();
+      wndInit();
     }
   }
 }
@@ -124,10 +133,13 @@ function afterSrc2Load() {
 
 function bgTrans(dur) {
   if (!wnd || wnd.closed) {
-    alert('먼저 송출 창을 띄우세요.');
+    alert('현재 송출 창이 떠 있지 않거나, 스위처와 송출 창이 서로 통신할 수 없는 상태이므로 송출 창을 다시 띄워야 합니다.');
     document.getElementById('wndOnOffBtn').focus();
   } else {
     var bgNo = getBgNo() - 1;
+    if (bgNo < -1) {
+      return;
+    }
     document.getElementById('pgmRadio' + i).checked = true;
     setTimeout(function() {
       var bgNoTemp = bgNo;
