@@ -24,6 +24,7 @@ function wndInit() {
 <!doctype html>\n\
 <html>\n\
 <head>\n\
+<meta charset=\"utf-8\">\n\
 <title>송출.HtmlPresenter</title>\n\
 <style>\n\
 body {\n\
@@ -40,7 +41,7 @@ video,img,div {\n\
   margin: 0;\n\
   padding: 0;\n\
 }\n\
-#src1,#src2,#src3 {\n\
+#src1,#src2 {\n\
   opacity: 0;\n\
   background-color: #000000;\n\
 }\n\
@@ -52,7 +53,6 @@ video,img,div {\n\
 <body>\n\
 <div id=\"src1\"></div>\n\
 <div id=\"src2\"></div>\n\
-<div id=\"src3\"></div>\n\
 <div id=\"black\"></div>\n\
 </body>\n\
 </html>');
@@ -160,11 +160,9 @@ function bgTrans(dur) {
     }
     var src1 = wnd.document.getElementById('src1');
     var src2 = wnd.document.getElementById('src2');
-    var src3 = wnd.document.getElementById('src3');
     var black = wnd.document.getElementById('black');
     src1.style.transition = 'opacity ' + dur + 's';
     src2.style.transition = 'opacity ' + dur + 's';
-    src3.style.transition = 'opacity ' + dur + 's';
     black.style.transition = 'opacity ' + dur + 's';
     if (bgNo == -1) {
       bgPgm = 0;
