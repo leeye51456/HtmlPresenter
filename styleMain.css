@@ -105,6 +105,9 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: #f8f8f8;
 }
+tr:hover {
+  background-color: #f0f0f0;
+}
 td {
   text-align: center;
   width: 2em;
@@ -196,6 +199,9 @@ blockquote {
   clear: both;
 }
 
+.tdCheck:hover {
+  background-color: #e0e0e0;
+}
 .tdLeft {
   text-align: left;
   width: auto;

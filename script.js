@@ -31,6 +31,7 @@ body {\n\
   background-color: #000000;\n\
   margin: 0;\n\
   padding: 0;\n\
+  cursor: none;\n\
 }\n\
 video,img,div {\n\
   position: absolute;\n\
@@ -209,20 +210,29 @@ function bgTrans(dur) {
 
 function bgPvwChanged(pvwBgNo) {
   var bgNo = getBgNo() - 1;
-  var htmlText = '';
-  if (fileListArray[bgNo].slice(-3) == 'mp4') {
-    htmlText += '<video id="pvwObjInner" src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-  } else if (bgNo != -1) {
-    htmlText += '<img id="pvwObjInner" src="src/' + fileListArray[bgNo] + '">';
+  var htmlText;
+  if (bgNo == -1) {
+    htmlText = '';
+  } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
+    htmlText = '<video id="pvwObjInner" src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+  } else {
+    htmlText = '<img id="pvwObjInner" src="src/' + fileListArray[bgNo] + '">';
   }
   document.getElementById('pvwObj').innerHTML = htmlText;
   document.getElementById('pvwObjInner').style.width = document.getElementById('pvwObj').style.width;
   document.getElementById('bgAutoBtn').focus();
 }
 
+function selPvw(pvwNum) {
+  document.getElementById('pvwRadio' + pvwNum).click();
+}
+function chkBg(pvwNum) {
+  document.getElementById('checkbox' + pvwNum).click();
+}
+
 function displayFileListHtml() {
-  var text = '<tr>\
-<td>&nbsp;</td>\
+  var text = '<tr onclick="selPvw(0);">\
+<td class="tdCheck">&nbsp;</td>\
 <td><input type="radio" id="pvwRadio0" name="pvwRadio" onclick="bgPvwChanged(0);"></td>\
 <td><input type="radio" id="pgmRadio0" class="pgmRadio" disabled></td>\
 <td>&nbsp;</td>\
@@ -230,8 +240,8 @@ function displayFileListHtml() {
 </tr>';
   if (fileListArray.length > 0) {
     for (i = 0; i < fileListArray.length; i++) {
-      text += '<tr>\
-<td><input type="checkbox" id="checkbox' + (i + 1) + '"></td>\
+      text += '<tr onclick="selPvw(' + (i + 1) + ');">\
+<td class="tdCheck" onclick="chkBg(' + (i + 1) + ');"><input type="checkbox" id="checkbox' + (i + 1) + '"></td>\
 <td><input type="radio" id="pvwRadio' + (i + 1) + '" name="pvwRadio" onclick="bgPvwChanged(' + (i + 1) + ');"></td>\
 <td><input type="radio" id="pgmRadio' + (i + 1) + '" class="pgmRadio" disabled></td>';
       if (fileListArray[i].slice(-3) == 'mp4') {
