@@ -136,76 +136,77 @@ function bgTrans(dur) {
   if (!wnd || wnd.closed) {
     alert('현재 송출 창이 떠 있지 않거나, 스위처와 송출 창이 서로 통신할 수 없는 상태이므로 송출 창을 다시 띄워야 합니다.');
     document.getElementById('wndOnOffBtn').focus();
-  } else {
-    var bgNo = getBgNo() - 1;
-    if (bgNo < -1) {
-      return;
-    }
-    document.getElementById('pgmRadio' + i).checked = true;
-    setTimeout(function() {
-      var bgNoTemp = bgNo;
-      document.getElementById('bgAutoBtn').disabled = undefined;
-      document.getElementById('bgCutBtn').disabled = undefined;
-      for (i = fileListArray.length; i >= 0; i--) {
-        document.getElementById('pvwRadio' + i).disabled = undefined;
-        document.getElementById('pvwRadio' + i).checked = false;
-        document.getElementById('pgmRadio' + i).checked = false;
-      }
-      document.getElementById('pgmRadio' + (bgNoTemp + 1)).checked = true;
-      document.getElementById('pvwObj').innerHTML = '';
-    }, delay + dur * 1000);
-    document.getElementById('bgAutoBtn').disabled = 'disabled';
-    document.getElementById('bgCutBtn').disabled = 'disabled';
+    return;
+  }
+  var bgNo = getBgNo() - 1;
+  if (bgNo < -1) {
+    return;
+  }
+  document.getElementById('pgmRadio' + i).checked = true;
+  setTimeout(function() {
+    var bgNoTemp = bgNo;
+    document.getElementById('bgAutoBtn').disabled = undefined;
+    document.getElementById('bgCutBtn').disabled = undefined;
     for (i = fileListArray.length; i >= 0; i--) {
-      document.getElementById('pvwRadio' + i).disabled = 'disabled';
+      document.getElementById('pvwRadio' + i).disabled = undefined;
+      document.getElementById('pvwRadio' + i).checked = false;
+      document.getElementById('pgmRadio' + i).checked = false;
     }
-    var src1 = wnd.document.getElementById('src1');
-    var src2 = wnd.document.getElementById('src2');
-    var black = wnd.document.getElementById('black');
-    src1.style.transition = 'opacity ' + dur + 's';
-    src2.style.transition = 'opacity ' + dur + 's';
-    black.style.transition = 'opacity ' + dur + 's';
-    if (bgNo == -1) {
-      bgPgm = 0;
-      black.style.opacity = 1;
-    } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
-      if (bgPgm == 0) {
-        bgPgm = 2;
-        src2.style.transition = 'opacity 0s';
-        src1.style.transition = 'opacity 0s';
-        src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        src1.innerHTML = '';
-        afterSrc2Load();
-        black.style.opacity = 0;
-      } else if (bgPgm == 2) {
-        bgPgm = 1;
-        src1.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        afterSrc1Load();
-      } else if (bgPgm == 1) {
-        bgPgm = 2;
-        src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
-        afterSrc2Load();
-      }
-    } else {
-      if (bgPgm == 0) {
-        bgPgm = 2;
-        src2.style.transition = 'opacity 0s';
-        src1.style.transition = 'opacity 0s';
-        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
-        src1.innerHTML = '';
-        afterSrc2Load();
-        black.style.opacity = 0;
-      } else if (bgPgm == 2) {
-        bgPgm = 1;
-        src1.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
-        afterSrc1Load();
-      } else if (bgPgm == 1) {
-        bgPgm = 2;
-        src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
-        afterSrc2Load();
-      }
+    document.getElementById('pgmRadio' + (bgNoTemp + 1)).checked = true;
+    document.getElementById('pvwObj').innerHTML = '';
+  }, delay + dur * 1000);
+  document.getElementById('bgAutoBtn').disabled = 'disabled';
+  document.getElementById('bgCutBtn').disabled = 'disabled';
+  for (i = fileListArray.length; i >= 0; i--) {
+    document.getElementById('pvwRadio' + i).disabled = 'disabled';
+  }
+  var src1 = wnd.document.getElementById('src1');
+  var src2 = wnd.document.getElementById('src2');
+  var black = wnd.document.getElementById('black');
+  src1.style.transition = 'opacity ' + dur + 's';
+  src2.style.transition = 'opacity ' + dur + 's';
+  black.style.transition = 'opacity ' + dur + 's';
+  if (bgNo == -1) {
+    bgPgm = 0;
+    black.style.opacity = 1;
+  } else if (fileListArray[bgNo].slice(-3) == 'mp4') {
+    if (bgPgm == 0) {
+      bgPgm = 2;
+      src2.style.transition = 'opacity 0s';
+      src1.style.transition = 'opacity 0s';
+      src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+      src1.innerHTML = '';
+      afterSrc2Load();
+      black.style.opacity = 0;
+    } else if (bgPgm == 2) {
+      bgPgm = 1;
+      src1.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+      afterSrc1Load();
+    } else if (bgPgm == 1) {
+      bgPgm = 2;
+      src2.innerHTML = '<video src="src/' + fileListArray[bgNo] + '" autoplay loop muted></video>';
+      afterSrc2Load();
+    }
+  } else {
+    if (bgPgm == 0) {
+      bgPgm = 2;
+      src2.style.transition = 'opacity 0s';
+      src1.style.transition = 'opacity 0s';
+      src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
+      src1.innerHTML = '';
+      afterSrc2Load();
+      black.style.opacity = 0;
+    } else if (bgPgm == 2) {
+      bgPgm = 1;
+      src1.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
+      afterSrc1Load();
+    } else if (bgPgm == 1) {
+      bgPgm = 2;
+      src2.innerHTML = '<img src="src/' + fileListArray[bgNo] + '">';
+      afterSrc2Load();
     }
   }
+  
 }
 
 function bgPvwChanged(pvwBgNo) {
